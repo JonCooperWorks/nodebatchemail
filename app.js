@@ -68,10 +68,10 @@ app.post("/configurecron", function (request, response) {
 		http.get("/batchmail", function (resp) {
 			resp.pipe(bl(function (err, data) {
 				if (err) {
-					response.send(500);
+					console.error(err);
 				}
 
-				response.send(data.toString());
+				console.log(data.toString());
 			}));
 		});
 	});
