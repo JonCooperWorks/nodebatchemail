@@ -3,6 +3,7 @@
  */
 
 var analyze = require('Sentimental').analyze,
+	bl = require('bl'),
 	CronJob = require("cron").CronJob,
 	express = require("express"),
 	http = require("http"),
@@ -58,6 +59,24 @@ app.get("/batchmail", function (request, response) {
 
 app.post("/sentimentanalysis", function (request, response) {
 	response.send(analyze(request.body.text));
+});
+
+app.post("/configurecron", function (request, response) {
+	var start = request.body,
+	date = new Date(start.year, start.month, start.day);
+	new CronJob(date, function () {
+		http.get("/batchmail", function (resp) {
+			resp.pipe(bl(function (err, data) {
+				if (err) {
+					response.send(500);
+				}
+
+				response.send(data.toString());
+			}));
+		});
+	});;
+
+	response.send({status: "success", date: date});
 });
 
 app.listen(3000);
