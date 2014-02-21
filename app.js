@@ -74,7 +74,7 @@ app.post("/configurecron", function (request, response) {
 				response.send(data.toString());
 			}));
 		});
-	});;
+	});
 
 	response.send({status: "success", date: date});
 });
