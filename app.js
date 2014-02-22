@@ -34,7 +34,7 @@ app.get("/batchmail", function (request, response) {
 		}
 	});
 
-	users.map(function (user) {
+	users.forEach(function (user) {
 		var options = {
 			from: "surveymailer450@gmail.com",
 			to: user.email,
