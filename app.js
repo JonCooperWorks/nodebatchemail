@@ -22,7 +22,7 @@ var app = express();
 
 // Middleware
 app.configure(function () {
-	app.use(express.bodyParser());
+	app.use(express.urlencoded());
 });
 
 app.get("/batchmail", function (request, response) {
